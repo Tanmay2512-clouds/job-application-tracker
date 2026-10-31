@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {Button} from "@/components/ui/button"
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -13,7 +14,9 @@ export default function Home() {
             <p className="text-muted-foreground mb-10 text-xl">Capture , Organize and manage your job search in one place</p>
           </div>
           <div className="flex flex-col items-center gap-4">
+            <Link href="/sign-up" passHref>
             <Button size="lg" className="text-lg font-medium">Start for free <ArrowRight/> </Button>
+            </Link>
             <p className="text-sm text-muted-foreground">Free forvever . No credit card required</p>
           </div>
         </section>
