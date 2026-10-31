@@ -5,9 +5,13 @@ export default function Home() {
     <div className="flex min-h-screen flex-col bg-black">
       <main className="flex-1">
         <section className="container mx-auto px-4 py-32">
-          <div>
-            <h1>A better way to track your job application.</h1>
-            <p>Capture , Organize and manage your job search in one place</p>
+          <div className="mx-auto max-w-4xl text-center">
+            <h1 className="text-white mb-6 text-6xl font-bold">A better way to track your job application.</h1>
+            <p className="mb-10 text-xl">Capture , Organize and manage your job search in one place</p>
+          </div>
+          <div className="flex flex-col items-center gap-4">
+            <button>Start for free</button>
+            <p>Free forvever . No credit card required</p>
           </div>
         </section>
       </main>
