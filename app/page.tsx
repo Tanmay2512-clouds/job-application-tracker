@@ -20,6 +20,10 @@ export default function Home() {
             <p className="text-sm text-muted-foreground">Free forvever . No credit card required</p>
           </div>
         </section>
+        {/*Hero Image section */}
+        <section>
+
+        </section>
       </main>
     </div>
   );
