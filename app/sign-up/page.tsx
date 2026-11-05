@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { useState } from "react";
-import { setEngine } from "crypto"
 import { useRouter } from "next/navigation"
 
 export default function SignUp(){
@@ -56,6 +55,11 @@ export default function SignUp(){
                 </CardHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <CardContent className="space-y-4">
+                        {error && (
+                            <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                            {error}
+                            </div>
+                        )}
                         
                         <div className="space-y-2">
                             <Label htmlFor="name">Name</Label>
@@ -63,15 +67,15 @@ export default function SignUp(){
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="email" className="text-gray-700">Email</Label>
-                            <Input value={email} onChange={(e)=> setEmail(e.target.value)} id="email" type="email" placeholder="johndoe@example.com" required className="border-gray-300 focus:border-primary focus:ring-primary"/>
+                            <Input value={email} onChange={(e)=> setEmail(e.target.value)} id="email" type="email" placeholder="john@example.com" required className="border-gray-300 focus:border-primary focus:ring-primary"/>
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
-                            <Input value={password} onChange={(e)=> setPassword(e.target.value)} minLength={8} id="password" type="text" placeholder="John Doe" required className="border-gray-300 focus:border-primary focus:ring-primary"/>
+                            <Input value={password} onChange={(e)=> setPassword(e.target.value)} minLength={8} id="password" type="password" placeholder="John Doe" required className="border-gray-300 focus:border-primary focus:ring-primary"/>
                         </div>
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-4">
-                        <Button type="submit" className="w-full bg-primary hover:bg-primary/90">Sign-up</Button>
+                        <Button disabled={loading} type="submit" className="w-full bg-primary hover:bg-primary/90"> {loading ? "Creating account..." : "Sign Up"}</Button>
                         <p className="text-center text-sm text-gray-600">Already have an account ? <Link href="/sign-in" className="font-medium text-primary hover:underline">Sign-In</Link></p>
                     </CardFooter>
                 </form>
