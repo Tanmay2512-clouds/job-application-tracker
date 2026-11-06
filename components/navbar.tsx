@@ -1,8 +1,11 @@
 import { Briefcase } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { getSession } from "@/lib/auth/auth";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await getSession()
+
   return (
     <nav className="border-b border-gray-200 bg-white">
       <div className="container mx-auto grid h-16 grid-cols-3 items-center px-4">
@@ -19,6 +22,9 @@ export default function Navbar() {
 
         {/* Buttons - Center */}
         <div className="col-start-2 flex items-center justify-center gap-4">
+          {session?.user? <>
+          </>:
+          <>
           <Link href="/sign-in">
             <Button
               variant="ghost"
@@ -33,6 +39,8 @@ export default function Navbar() {
               Start for Free
             </Button>
           </Link>
+          </>}
+          
         </div>
 
       </div>
