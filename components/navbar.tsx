@@ -1,9 +1,10 @@
 import { Briefcase } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { getSession } from "@/lib/auth/auth";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { getSession, signOut } from "@/lib/auth/auth";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "./ui/avatar";
+
 
 export default async function Navbar() {
   const session = await getSession()
@@ -35,9 +36,16 @@ export default async function Navbar() {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>
-                <div><p>{session.user.name}</p></div>
-              </DropdownMenuLabel>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>
+                  <div>
+                    <p>{session.user.name}</p>
+                    <p>{session.user.email}</p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuItem onClick={async ()=>await signOut()}>Log Out</DropdownMenuItem>
+              </DropdownMenuGroup>
+              
             </DropdownMenuContent>
           </DropdownMenu>
           
