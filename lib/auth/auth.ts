@@ -3,7 +3,22 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
 import { headers } from "next/headers";
 
-const client = new MongoClient(process.env.MONGODB_URI!);
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+    throw new Error("Please define the MONGODB_URI environment variable.");
+}
+
+declare global {
+    var mongoClient: MongoClient | undefined;
+}
+
+const client = globalThis.mongoClient ?? new MongoClient(MONGODB_URI);
+
+if (process.env.NODE_ENV !== "production") {
+    globalThis.mongoClient = client;
+}
+
 const db = client.db()
 
 
