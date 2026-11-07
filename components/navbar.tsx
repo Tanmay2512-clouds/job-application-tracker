@@ -1,14 +1,17 @@
+"use client"
+
 import { Briefcase } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { getSession, signOut } from "@/lib/auth/auth";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "./ui/avatar";
+import SignOutButton from "./sign-out-btn";
+import { useSession } from "@/lib/auth/auth-client";
 
 
-export default async function Navbar() {
-  const session = await getSession()
-
+export default  function Navbar() {
+  const {data:session} = useSession()
   return (
     <nav className="border-b border-gray-200 bg-white">
       <div className="container mx-auto grid h-16 grid-cols-3 items-center px-4">
@@ -30,20 +33,20 @@ export default async function Navbar() {
           <Button variant="ghost" className="text-gray-700 hover:text-black">Dashboard</Button>
           </Link>
           <DropdownMenu>
-            <DropdownMenuTrigger className="inline-flex items-center justify-center rounded-lg p-2 text-sm font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
-              <Avatar>
+            <DropdownMenuTrigger>
+              <Avatar className="h-8 w-8">
                 <AvatarFallback className="bg-primary text-white">{session.user.name[0].toUpperCase()}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="w-56" align="end">
               <DropdownMenuGroup>
-                <DropdownMenuLabel>
-                  <div>
-                    <p>{session.user.name}</p>
-                    <p>{session.user.email}</p>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">{session.user.name}</p>
+                    <p className="text-xs leading-none text-muted-foreground">{session.user.email}</p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuItem onClick={async ()=>await signOut()}>Log Out</DropdownMenuItem>
+                <SignOutButton/>
               </DropdownMenuGroup>
               
             </DropdownMenuContent>
