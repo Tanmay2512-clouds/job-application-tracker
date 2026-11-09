@@ -1,6 +1,19 @@
 import connectDB from "./db";
 import {Board,Column} from "./models"
-import colums from "./models/column";
+import jobApplication from "./models/job-application";
+
+
+const DEFAULT_COLUMNS =[
+    {
+        name:"Wish List",
+        order:0
+    },
+    {name:"Applied",order:1},
+    {name:"Interviewing", order:2},
+    {name:"offer",order:3},
+    {name:"Rejected",order:4}
+]
+
 
 export async function initializeUserBoard(userId: string){
     try{
@@ -17,7 +30,20 @@ export async function initializeUserBoard(userId: string){
             name:"Job Hunt",
             userId,
             columns:[]
-        })
+        });
+
+        //creating default columns
+        const columns = await Promise.all(DEFAULT_COLUMNS.map((col)=> Column.create({
+            name:col.name,
+            order:col.order,
+            boardId:board._id,
+            jobApplication:[] 
+        })))    //lets u run all the creation
+
+        board.columns = columns.map((col)=>col._id)
+
+        await board.save()
+        return board;
 
     }catch(err){
         throw err

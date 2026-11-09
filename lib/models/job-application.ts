@@ -46,7 +46,7 @@ const JobApplicationSchema =  new Schema<IJobApplication>({
         index:true
     },
     boardId:{
-        typwe:Schema.Types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:"Board",
         required:true,
         index:true
