@@ -6,6 +6,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
+import CreateJobApplicationDialog from "./create-job-dialog";
 
 
 interface KanbanBoardProps{
@@ -49,10 +50,11 @@ function DroppableColumn({column, config,boardId}:{column:Column;config:ColConfi
                     <CardTitle className="text-white text-base font-semibold">{column.name}</CardTitle>
                 </div>
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-6 w-6 text-white hover:bg-white/20" size="icon">
+                    <DropdownMenuTrigger render={
+                         <Button variant="ghost" className="h-6 w-6 text-white hover:bg-white/20" size="icon">
                             <MoreVertical className="h-4 w-4"/>
                         </Button>
+                    } >
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem className="text-destructive"><Trash2 className="mr-2 h-4 w-4"/>Delete Column</DropdownMenuItem>
@@ -61,7 +63,7 @@ function DroppableColumn({column, config,boardId}:{column:Column;config:ColConfi
             </div>
         </CardHeader>
         <CardContent className="space-y-2 pt-4 bg-gray-50/50 min-h-100 rounded-b-lg">
-        <CreateJobApplicationDialog/>
+        <CreateJobApplicationDialog columnId={column._id} boardId={boardId}/>
 
         </CardContent>
         
