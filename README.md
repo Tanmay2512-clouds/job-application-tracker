@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Job Application Tracker
+
+A modern job search dashboard built with Next.js to help users organize, track, and manage their job applications in one place.
+
+## Overview
+
+This project is a Kanban-style job tracking app where each user gets a personalized dashboard for managing application progress. The default workflow includes stages like "Wish List", "Applied", "Interviewing", "Offer", and "Rejected" so users can move applications through the hiring pipeline visually.
+
+## Features
+
+- User authentication with email and password using Better Auth
+- Personalized dashboard per registered user
+- Job board initialized automatically for each new account
+- Kanban columns for application stages
+- Application tracking with company, role, notes, salary, job URL, tags, and dates
+- Clean, responsive interface built with Tailwind CSS and component-based UI patterns
+- MongoDB-backed persistence for users, boards, columns, and job records
+
+## Tech Stack
+
+- Next.js 16 with App Router
+- React 19
+- TypeScript
+- Tailwind CSS
+- shadcn-style UI components
+- MongoDB + Mongoose
+- Better Auth for authentication
+- Lucide React icons
+- Base UI utilities
+
+## Project Structure
+
+```bash
+app/                 # App Router pages and API routes
+components/         # Reusable UI and dashboard components
+lib/                # Database connection, auth, and models
+  auth/              # Better Auth setup and session helpers
+  models/            # Mongoose schemas for boards, columns, and jobs
+public/             # Static assets
+``` 
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- MongoDB instance or MongoDB Atlas connection string
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create a `.env.local` file in the project root:
+
+```bash
+MONGODB_URI="mongodb://localhost:27017/job-application-tracker"
+NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
+```
+
+Optional but recommended for production-like auth security:
+
+```bash
+BETTER_AUTH_SECRET="your-strong-secret"
+```
+
+### Run the app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Authentication Flow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app uses Better Auth with email/password authentication. When a user signs up, the system automatically creates a default `Job Hunt` board and initializes the standard hiring stages.
 
-## Learn More
+## Default Board Stages
 
-To learn more about Next.js, take a look at the following resources:
+- Wish List
+- Applied
+- Interviewing
+- Offer
+- Rejected
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev      # Start the development server
+npm run build    # Build the production app
+npm run start    # Run the built app
+npm run lint     # Lint the project
+```
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is designed as a job application tracking dashboard and is built around a MongoDB-backed model layer with a flexible Kanban workflow. It is well-suited for personal productivity use and can be extended with features such as filters, drag-and-drop job management, analytics, and reminders.
