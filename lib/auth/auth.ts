@@ -1,63 +1,54 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { MongoClient } from "mongodb";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { initializeUserBoard } from "../init-user-board";
+import connectDB from "../db";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-    throw new Error("Please define the MONGODB_URI environment variable.");
-}
-
-declare global {
-    var mongoClient: MongoClient | undefined;
-}
-
-const client = globalThis.mongoClient ?? new MongoClient(MONGODB_URI);
-
-if (process.env.NODE_ENV !== "production") {
-    globalThis.mongoClient = client;
-}
-
-const db = client.db()
-
+const mongooseInstance = await connectDB();
+const client = mongooseInstance.connection.getClient();
+const db = client.db();
 
 export const auth = betterAuth({
-    database: mongodbAdapter(db,{  //here pass database instance and client
-        client,
-    }),
-    //we will use email and password authentication
-    emailAndPassword  :{
-        enabled:true
+  database: mongodbAdapter(db, {
+    client,
+  }),
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 60,
     },
-    databaseHooks:{
-      user:{
-        create:{
-          after: async (user)=>{
-            if(user.id){
-              await initializeUserBoard(user.id)
-            }
+  },
+  emailAndPassword: {
+    enabled: true,
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          if (user.id) {
+            await initializeUserBoard(user.id);
           }
-        }
-      }
-    }            
-})
+        },
+      },
+    },
+  },
+});
 
-export async function getSession(){
+export async function getSession() {
   const result = await auth.api.getSession({
-    headers:await headers(),
+    headers: await headers(),
   });
 
-  return result
+  return result;
 }
-export async function signOut(){
+
+export async function signOut() {
   const result = await auth.api.signOut({
-    headers:await headers(),
+    headers: await headers(),
   });
 
-  if(result.success){
-    redirect("/sign-in")
+  if (result.success) {
+    redirect("/sign-in");
   }
 }

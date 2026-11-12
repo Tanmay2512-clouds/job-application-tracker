@@ -6,6 +6,7 @@ import connectDB from "../db"
 import { Board, Column, JobApplication } from "../models"
 import board from "../models/board"
 import jobApplication from "../models/job-application"
+import { revalidatePath } from "next/cache"
 
 interface jobApplicationData{
 
@@ -94,6 +95,8 @@ export async function createJobApplication(data:jobApplicationData){
         $push:{jobApplications:jobApplication._id}
 
     });
+
+    revalidatePath("/dashboard")
 
     return { data: JSON.parse(JSON.stringify(jobApplication)) };
 }
