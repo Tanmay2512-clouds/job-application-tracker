@@ -1,16 +1,13 @@
-import { number } from "better-auth";
-import { schema } from "better-auth/client/plugins";
 import mongoose ,{Schema , Document} from "mongoose"
-import { types } from "util";
 
 export interface IColumn extends Document{ //type of IBoard is document
 
     name:string;
     boardId:mongoose.Types.ObjectId;
     order:number;
-    jobApplication :mongoose.Types.ObjectId[]; //collection of something not defined yet
+    jobApplications:mongoose.Types.ObjectId[];
     createdAt:Date;
-    updtatedAt:Date
+    updatedAt:Date
 }
 
 const ColumnSchema = new Schema<IColumn>({ //type of BoardSchema is Iboard
@@ -30,7 +27,7 @@ const ColumnSchema = new Schema<IColumn>({ //type of BoardSchema is Iboard
         required:true,
         default:0
     },
-    jobApplication:[
+    jobApplications:[
         {
             type:Schema.Types.ObjectId,
             ref:"JobApplication"

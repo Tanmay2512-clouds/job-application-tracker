@@ -1,7 +1,7 @@
 "use client"
 
 import { Board, Column } from "@/lib/models/models.types";
-import { Award, Calendar, CheckCircle2, Key, Mic, MoreHorizontal, MoreVertical, Trash2, XCircle } from "lucide-react";
+import { Award, Calendar, CheckCircle2, Mic, MoreVertical, Trash2, XCircle } from "lucide-react";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
@@ -42,7 +42,10 @@ const COLUMN_CONFIG : Array<ColConfig> = [
     }
 ]
 
+
 function DroppableColumn({column, config,boardId}:{column:Column;config:ColConfig,boardId:string}){
+
+    const sortedJobs = column.jobApplications.sort((a,b)=>a.order - b.order)
     return <Card className="min-w-75-shrink-0 shadow-md p-0">
         <CardHeader className={`${config.color} text-white rounded-t-l pb-3 pt-3`}>
             <div className="flex items-center justify-between">
@@ -72,8 +75,9 @@ function DroppableColumn({column, config,boardId}:{column:Column;config:ColConfi
 }
 
 export default function KanbanBoard({board,userId}:KanbanBoardProps){
+    const columns = board.columns 
+    console.log(columns[0].jobApplications)
 
-    const columns = board.columns
     return(
         <>
         <div>
