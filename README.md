@@ -1,86 +1,77 @@
-# Job Application Tracker
+# Job Hunt
 
-A modern job search dashboard built with Next.js to help users organize, track, and manage their job applications in one place.
+A polished job application tracker built with Next.js 16, React 19, TypeScript, and MongoDB. The app gives job seekers a structured way to monitor their application pipeline from the initial interest stage through interviews and offers, all inside a clean, board-based workflow.
 
 ## Overview
 
-This project is a Kanban-style job tracking app where each user gets a personalized dashboard for managing application progress. The default workflow includes stages like "Wish List", "Applied", "Interviewing", "Offer", and "Rejected" so users can move applications through the hiring pipeline visually.
+Job Hunt is designed for people who want a focused, low-friction system to manage the messy process of job searching. Instead of tracking applications in scattered notes, spreadsheets, or tabs, users get a personalized dashboard that organizes each opportunity by stage and keeps the details in one place.
 
-## Features
+The current version includes:
 
-- User authentication with email and password using Better Auth
-- Personalized dashboard per registered user
-- Job board initialized automatically for each new account
-- Kanban columns for application stages
-- Application tracking with company, role, notes, salary, job URL, tags, and dates
-- Clean, responsive interface built with Tailwind CSS and component-based UI patterns
-- MongoDB-backed persistence for users, boards, columns, and job records
+- Secure sign-up and sign-in with Better Auth
+- Automatic onboarding for each new user
+- A default `Job Hunt` board initialized on account creation
+- A drag-and-drop Kanban workflow for application stages
+- Persistent storage with MongoDB and Mongoose
+- Editable job records with company, role, location, salary, tags, URL, and notes
+- Visual status tracking across the hiring lifecycle
 
-## Tech Stack
+## Why it exists
 
-- Next.js 16 with App Router
+Job searching is high-volume and inconsistent. This project aims to reduce cognitive overhead by turning the process into a workflow: capture opportunities, move them through stages, and keep context attached to each application without losing track of details.
+
+## Key features
+
+- Personalized board per user
+- Default pipeline: Wish List, Applied, Interviewing, Offer, Rejected
+- Add, edit, move, and delete job applications
+- Inline metadata capture for:
+  - company
+  - position
+  - location
+  - salary
+  - job URL
+  - tags
+  - description
+  - notes
+- Drag-and-drop organization using `@dnd-kit`
+- Responsive dashboard UI with shadcn-inspired components
+- MongoDB-backed data model for boards, columns, and job records
+- Clean landing page and auth experience
+
+## Tech stack
+
+- Next.js 16
 - React 19
 - TypeScript
 - Tailwind CSS
-- shadcn-style UI components
+- Base UI primitives
 - MongoDB + Mongoose
-- Better Auth for authentication
-- Lucide React icons
-- Base UI utilities
+- Better Auth
+- Lucide React
+- `@dnd-kit` for drag-and-drop interactions
 
-## Project Structure
-
-```bash
-app/                 # App Router pages and API routes
-components/         # Reusable UI and dashboard components
-lib/                # Database connection, auth, and models
-  auth/              # Better Auth setup and session helpers
-  models/            # Mongoose schemas for boards, columns, and jobs
-public/             # Static assets
-``` 
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- MongoDB instance or MongoDB Atlas connection string
-
-### Installation
-
-1. Clone the repository
-2. Install dependencies:
+## Project structure
 
 ```bash
-npm install
+app/                    # App Router routes, dashboard, auth pages, and UI entrypoints
+components/             # Reusable UI and Kanban components
+lib/                    # Database configs, auth helpers, models, and board initialization
+  auth/                 # Better Auth setup and session helpers
+  models/               # Schema definitions for Board, Column, and JobApplication
+scripts/                # Utility scripts
+public/                 # Static assets
 ```
 
-3. Create a `.env.local` file in the project root:
+## Application flow
 
-```bash
-MONGODB_URI="mongodb://localhost:27017/job-application-tracker"
-NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
-```
+1. A user signs up or signs in.
+2. Better Auth creates the account and triggers board initialization.
+3. A default `Job Hunt` board is created with standard pipeline columns.
+4. The user adds job applications and tracks them across stages.
+5. Jobs can be moved between columns, edited, or removed as the process evolves.
 
-Optional but recommended for production-like auth security:
-
-```bash
-BETTER_AUTH_SECRET="your-strong-secret"
-```
-
-### Run the app
-
-```bash
-npm run dev
-```
-
-Open http://localhost:3000 in your browser.
-
-## Authentication Flow
-
-The app uses Better Auth with email/password authentication. When a user signs up, the system automatically creates a default `Job Hunt` board and initializes the standard hiring stages.
-
-## Default Board Stages
+## Default board stages
 
 - Wish List
 - Applied
@@ -88,15 +79,68 @@ The app uses Better Auth with email/password authentication. When a user signs u
 - Offer
 - Rejected
 
-## Scripts
+## Getting started
+
+### Prerequisites
+
+- Node.js 18 or newer
+- npm or another package manager
+- MongoDB instance or Atlas connection
+
+### Installation
 
 ```bash
-npm run dev      # Start the development server
-npm run build    # Build the production app
-npm run start    # Run the built app
-npm run lint     # Lint the project
+git clone <repository-url>
+cd job-application-tracker
+npm install
 ```
 
-## Notes
+### Environment variables
 
-This project is designed as a job application tracking dashboard and is built around a MongoDB-backed model layer with a flexible Kanban workflow. It is well-suited for personal productivity use and can be extended with features such as filters, drag-and-drop job management, analytics, and reminders.
+Create a `.env.local` file in the project root:
+
+```bash
+MONGODB_URI="mongodb://localhost:27017/job-application-tracker"
+NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
+BETTER_AUTH_SECRET="your-strong-secret"
+```
+
+If you're using MongoDB Atlas, replace `MONGODB_URI` with your connection string.
+
+### Run the app locally
+
+```bash
+npm run dev
+```
+
+Then open:
+
+```text
+http://localhost:3000
+```
+
+## Available scripts
+
+```bash
+npm run dev        # Start the Next.js development server
+npm run build      # Production build
+npm run start      # Start the production server
+npm run lint       # Run ESLint on the project
+npm run seed:jobs  # Seed job data from the script in /scripts
+```
+
+## Current implementation notes
+
+This release already includes the core of a functional job-tracking workflow:
+
+- authenticated user onboarding
+- default board generation
+- Kanban drag-and-drop movement of applications
+- job record management
+- responsive UI for daily job-search operations
+
+The project is a strong foundation for future extensions such as filters, analytics, reminders, saved searches, interview tracking, and application statistics.
+
+## License
+
+This project is currently intended for personal or internal use as a portfolio or productivity application. Update this section if you plan to distribute it publicly.
