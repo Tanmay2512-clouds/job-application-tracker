@@ -100,12 +100,12 @@ npm install
 Create a `.env.local` file in the project root:
 
 ```bash
-MONGODB_URI="mongodb://localhost:27017/job-application-tracker"
+MONGODB_URL="mongodb://localhost:27017/job-application-tracker"
 NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
 BETTER_AUTH_SECRET="your-strong-secret"
 ```
 
-If you're using MongoDB Atlas, replace `MONGODB_URI` with your connection string.
+If you're using MongoDB Atlas, replace `MONGODB_URL` with your connection string.
 
 ### Run the app locally
 
