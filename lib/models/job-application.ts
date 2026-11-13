@@ -4,7 +4,7 @@ import { Sticker } from "lucide-react";
 import mongoose,{Schema,Document, mongo} from "mongoose";
 import { getSession } from "../auth/auth";
 import { error } from "console";
-import { JobApplication } from ".";
+import { Column, JobApplication } from ".";
 
 export interface IJobApplication extends Document{
     company :string;
@@ -87,44 +87,6 @@ const JobApplicationSchema =  new Schema<IJobApplication>({
 },{timestamps:true})
 
 
-export async function updateJobApplication(id:string,
-    updates:{
-        company?:string;
-        position?:string;
-        location?:string;
-        notes?:string;
-        salary?:string;
-        jobUrl?:string;
-        columnId?:string;
-        order?:number;
-        tags?:string[];
-        description?:string;
-    }
-){
-    const session = await getSession()
-
-    if(!session?.user){
-        return{error:"Unauthorized"}
-
-    }
-
-    const jobApplication = await JobApplication.findById(id)
-
-    const {columnId ,order,...otherUpdates} = updates
-
-    const updatesToApply:Partial<{
-        company:string;
-        position:string;
-        location:string;
-        notes:string;
-        salary:string;
-        jobUrl:string;
-        columnId:string;
-        order:number;
-        tags:string[];
-        description:string;
-    }> = otherUpdates
-}
 
 
 export default mongoose.models.JobApplication || mongoose.model<IJobApplication>("JobApplication",JobApplicationSchema)  
